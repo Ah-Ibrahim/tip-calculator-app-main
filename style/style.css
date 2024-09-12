@@ -20,7 +20,7 @@
     --light-grayish-cyan: #c5e4e7;
     --very-light-grayish-cyan: #f4fafa;
     --white: hsl(0, 0%, 100%);
-    --red: rgb(241, 50, 50);
+    --red: rgb(248, 70, 70);
     --dark-blueish-gray: #0d686d;
 }
 
@@ -112,6 +112,10 @@ form .error-text {
 
 form input[type="text"]:focus {
     border-color: var(--strong-cyan);
+}
+
+form input[type="text"].input--error:focus {
+    border-color: var(--red);
 }
 
 form .btn--tip {

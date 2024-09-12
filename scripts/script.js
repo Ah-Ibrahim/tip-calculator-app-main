@@ -1,0 +1,94 @@
+'use strict';
+
+const inputs = document.querySelectorAll('input[type="text"]');
+const billInput = document.getElementById('input-bill');
+const peopleInput = document.getElementById('input-people');
+const customInput = document.querySelector('.input--custom');
+const billErrorText = document.querySelector('#input-bill+.error-text');
+const peopleErrorText = document.querySelector('#input-people+.error-text');
+
+let billInputIsValid = false;
+let peopleInputIsValid = false;
+
+const isInputZero = function (input) {
+	return Number(input.value) === 0;
+};
+
+const isInputNotInteger = function (input) {
+	return !Number.isInteger(Number(input.value));
+};
+
+const isInputNotValidNumber = function (input) {
+	return isNaN(Number(input.value));
+};
+
+const makeInputNumOnly = function () {
+	this.value = this.value.replace(/[^0-9.]/g, '');
+};
+
+function validateInput(input, errorText) {
+	if (input.value === '') {
+		errorText.classList.add('hidden');
+		input.classList.remove('input--error');
+
+		input.isValid = false;
+	} else if (isInputZero(input)) {
+		errorText.textContent = "can't be zero";
+		errorText.classList.remove('hidden');
+		input.classList.add('input--error');
+
+		input.isValid = false;
+	} else if (isInputNotValidNumber(input)) {
+		errorText.textContent = 'enter a valid number';
+		errorText.classList.remove('hidden');
+		input.classList.add('input--error');
+
+		input.isValid = false;
+	} else {
+		errorText.classList.add('hidden');
+		input.classList.remove('input--error');
+
+		input.isValid = true;
+	}
+}
+
+for (let input of inputs) {
+	input.addEventListener('input', makeInputNumOnly);
+}
+
+billInput.addEventListener('input', function () {
+	validateInput(this, billErrorText);
+});
+peopleInput.addEventListener('input', function () {
+	validateInput(this, peopleErrorText);
+
+	if (isInputNotInteger(this)) {
+		peopleErrorText.textContent = "can't be decimal";
+		peopleErrorText.classList.remove('hidden');
+		this.classList.add('input--error');
+
+		this.isValid = false;
+	}
+});
+
+customInput.addEventListener('input', function () {
+	if (this.value === '') {
+		this.classList.remove('input--error');
+
+		this.isValid = false;
+	} else if (isInputZero(this)) {
+		this.classList.add('input--error');
+		alert("can't be zero");
+
+		this.isValid = false;
+	} else if (isInputNotValidNumber(this)) {
+		this.classList.add('input--error');
+		alert('enter a valid number');
+
+		this.isValid = false;
+	} else {
+		this.classList.remove('input--error');
+
+		this.isValid = true;
+	}
+});
