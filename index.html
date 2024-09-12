@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+
+  <title>Frontend Mentor | Tip calculator app</title>
+
+  <link rel="stylesheet" href="style/style.css" />
+
+</head>
+<body>
+  <!-- Bill Select Tip % 5% 10% 15% 25% 50% Custom Number of People Tip Amount / person Total / person Reset -->
+  <main>
+    <figure>
+      <img src="assets/images/logo.svg" alt="Logo">
+    </figure>
+    <form action="javascript:void(0);" class="bill-form">
+      <div class="left">
+        <div class="left__item">
+          <label for="bill-input">Bill</label>
+          <input type="text" id="input-bill" placeholder="0" />
+          <div class="error-text hidden"></div>
+        </div>
+        <div class="left__item">
+          <label for="tips">Select Tip %</label>
+          <div id="tips">
+            <button class="btn btn--tip btn--active">5%</button>
+            <button class="btn btn--tip">10%</button>
+            <button class="btn btn--tip">15%</button>
+            <button class="btn btn--tip">25%</button>
+            <button class="btn btn--tip">50%</button>
+            <input type="text" class="input--custom" placeholder="Custom">
+          </div>
+        </div>
+        <div class="left__item">
+          <label for="input-people">Number of People</label>
+          <input type="text" id="input-people" placeholder="0">
+          <div class="error-text hidden"></div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="right__item">
+          <div class="outputs">
+            <div class="output">
+              <div class="text">Tip Amount</div>
+              <div class="output-value">$<span id="tip-output">0.00</span></div>
+            </div>
+            <div class="output">
+              <div class="text">Total</div>
+              <div class="output-value">$<span id="total-output">0.00</span></div>
+            </div>
+          </div>
+          <button class="btn btn--reset btn--active id=" button-reset">RESET</button>
+        </div>
+      </div>
+    </form>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="#">Your Name Here</a>.
+    </div>
+  </main>
+  <script src="scripts/script.js"></script>
+</body>
+</html>

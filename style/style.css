@@ -1,0 +1,232 @@
+@font-face {
+    font-family: 'Space Mono';
+    src: url('../assets/fonts/Space_Mono/SpaceMono-Bold.ttf');
+    font-weight: 700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Mono';
+    font-weight: 700;
+}
+
+:root {
+    --strong-cyan: #26c0ab;
+    --very-dark-cyan: #00494d;
+    --dark-grayish-cyan: #5e7a7d;
+    --grayish-cyan: #7f9c9f;
+    --light-grayish-cyan: #c5e4e7;
+    --very-light-grayish-cyan: #f4fafa;
+    --white: hsl(0, 0%, 100%);
+    --red: rgb(241, 50, 50);
+    --dark-blueish-gray: #0d686d;
+}
+
+main {
+    background-color: var(--light-grayish-cyan);
+    padding: 10rem 0;
+}
+
+figure {
+    width: fit-content;
+    margin: 0 auto 5.25rem;
+}
+
+form {
+    background-color: var(--white);
+    width: 64vw;
+    margin: auto;
+    border-radius: 25px;
+    display: flex;
+    padding: 2rem;
+}
+
+form>* {
+    flex: 1 1 0;
+}
+
+form .left {
+    display: flex;
+    flex-direction: column;
+    padding: 0.85rem 1rem;
+    gap: 2.5rem;
+}
+
+form .left .left__item {
+    display: flex;
+    flex-direction: column;
+    margin-right: 2rem;
+    gap: 0.5rem;
+    position: relative;
+}
+
+
+form input, .btn {
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+form label {
+    color: var(--dark-grayish-cyan);
+    cursor: pointer;
+}
+
+form input[type="text"] {
+    background-color: var(--very-light-grayish-cyan);
+    border: 2px solid var(--very-light-grayish-cyan);
+    outline: none;
+    padding: 0.15em 0.75em;
+    font-size: 1.5rem;
+    text-align: end;
+    caret-color: var(--strong-cyan);
+    color: var(--very-dark-cyan)
+}
+
+#input-bill {
+    background-image: url('../assets/images/icon-dollar.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-origin: content-box;
+}
+
+#input-people {
+    background-image: url('../assets/images/icon-person.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-origin: content-box;
+}
+
+form input[type="text"].input--error {
+    border-color: var(--red);
+}
+
+form .error-text {
+    color: var(--red);
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+form input[type="text"]:focus {
+    border-color: var(--strong-cyan);
+}
+
+form .btn--tip {
+    background-color: var(--very-dark-cyan);
+    padding: 0.2em 1em;
+    color: var(--white);
+    border: 2px solid var(--very-dark-cyan);
+    transition: all 0.35s;
+}
+
+form .btn--tip:not(.btn--active):hover, form .btn--reset.btn--active:hover {
+    color: var(--very-dark-cyan);
+    background-color: var(--light-grayish-cyan);
+    border-color: var(--light-grayish-cyan);
+}
+
+
+
+form input[type="text"]::placeholder {
+    color: var(--grayish-cyan);
+}
+
+form #tips {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+form #tips>* {
+    font-size: 1.5rem;
+}
+
+form #tips .input--custom {
+    width: 100%;
+    padding: 0.25em;
+}
+
+form #tips .input--custom::placeholder {
+    text-align: center;
+    color: var(--dark-grayish-cyan);
+}
+
+.hidden {
+    display: none;
+}
+
+form .right {
+    background-color: var(--very-dark-cyan);
+    border-radius: 15px;
+}
+
+form .right__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3.5rem 2.5rem 2.6rem;
+    height: 100%;
+}
+
+form .right__item .outputs {
+    display: flex;
+    flex-direction: column;
+    gap: 3.25rem;
+}
+
+form .right__item .output {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+form .right__item .output .text {
+    color: var(--white);
+}
+
+form .right__item .output .text::after {
+    content: '/ person';
+    color: var(--grayish-cyan);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 0.8rem;
+}
+
+form .right__item .output-value {
+    color: var(--strong-cyan);
+    font-size: 3rem;
+    line-height: 0.9;
+}
+
+form .btn--reset {
+    font-size: 1.25rem;
+    padding: 0.4em;
+    background-color: var(--dark-blueish-gray);
+    color: var(--very-dark-cyan);
+    transition: all 0.35s;
+    cursor: not-allowed;
+}
+
+form .btn--active {
+    color: var(--very-dark-cyan);
+    background-color: var(--strong-cyan);
+    border-color: var(--strong-cyan);
+    cursor: pointer;
+}
+
+/* TODO position attr */
+
+.attribution {
+    display: none;
+    font-size: 11px;
+    text-align: center;
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
