@@ -8,6 +8,11 @@ const billErrorText = document.querySelector('#input-bill+.error-text');
 const peopleErrorText = document.querySelector('#input-people+.error-text');
 
 const tipBtns = document.querySelectorAll('.btn--tip');
+const resetBtn = document.getElementById('button-reset');
+const tipOutput = document.getElementById('tip-output');
+const totalOutput = document.getElementById('total-output');
+
+let activeBtn = null;
 
 const isInputZero = function (input) {
 	return Number(input.value) === 0;
@@ -23,6 +28,62 @@ const isInputNotValidNumber = function (input) {
 
 const makeInputNumOnly = function () {
 	this.value = this.value.replace(/[^0-9.]/g, '');
+};
+
+const canCalculate = function () {
+	let btnsIsActive = false;
+
+	for (let btn of tipBtns) {
+		if (btn.isActive) {
+			btnsIsActive = true;
+			break;
+		}
+	}
+
+	return billInput.isValid && (btnsIsActive || customInput.isValid) && peopleInput.isValid;
+};
+
+const calculate = function () {
+	const bill = +billInput.value;
+	const numPeople = +peopleInput.value;
+	let tip;
+
+	if (customInput.isValid) {
+		tip = +customInput.value / 100;
+	} else {
+		for (let tipBtn of tipBtns) {
+			if (tipBtn.isActive) {
+				tip = Number(tipBtn.textContent.slice(0, -1)) / 100;
+			}
+		}
+	}
+
+	const tipAmountPerPerson = (bill * tip) / numPeople;
+	const personTotal = bill / numPeople + tipAmountPerPerson;
+
+	return [tipAmountPerPerson, personTotal];
+};
+
+const updateOutputs = function (tipPerPerson, totalPerPerson) {
+	tipOutput.textContent = tipPerPerson.toFixed(2);
+	totalOutput.textContent = totalPerPerson.toFixed(2);
+};
+
+const resetCalc = function () {
+	updateOutputs(0, 0);
+};
+
+const resetAll = function () {
+	billInput.value = '';
+	billInput.isValid = false;
+
+	activeBtn = null;
+
+	customInput.value = '';
+	customInput.isValid = false;
+
+	peopleInput.value = '';
+	peopleInput.isValid = false;
 };
 
 function validateInput(input, errorText) {
@@ -52,19 +113,8 @@ function validateInput(input, errorText) {
 }
 
 const makeBtnActive = function (btn) {
-	for (let tipBtn of tipBtns) {
-		if (btn === tipBtn) {
-			tipBtn.classList.add('btn--active');
-			tipBtn.isActive = true;
-			continue;
-		}
-
-		tipBtn.classList.remove('btn--active');
-		tipBtn.isActive = false;
-	}
-
-	customInput.value = '';
-	customInput.isValid = false;
+	btn.classList.add('btn--active');
+	btn.isActive = true;
 };
 
 const makeBtnInactive = function (btn) {
@@ -72,15 +122,43 @@ const makeBtnInactive = function (btn) {
 	btn.isActive = false;
 };
 
+const docUpdate = function () {
+	if (canCalculate()) {
+		makeBtnActive(resetBtn);
+		resetBtn.addEventListener('click', resetAll);
+		updateOutputs(...calculate());
+	} else {
+		makeBtnInactive(resetBtn);
+		resetBtn.removeEventListener('click', resetAll);
+		resetCalc();
+	}
+};
+
 for (let input of inputs) {
 	input.addEventListener('input', makeInputNumOnly);
+	input.value = '';
+	input.isValid = false;
 }
 
 for (let btn of tipBtns) {
 	btn.isActive = false;
 
 	btn.addEventListener('click', function () {
-		btn.isActive ? makeBtnInactive(btn) : makeBtnActive(btn);
+		if (btn.isActive) {
+			makeBtnInactive(btn);
+		} else {
+			for (let tipBtn of tipBtns) {
+				if (tipBtn === btn) {
+					makeBtnActive(tipBtn);
+					continue;
+				}
+
+				makeBtnInactive(tipBtn);
+			}
+
+			customInput.value = '';
+			customInput.isValid = false;
+		}
 	});
 }
 
@@ -120,3 +198,11 @@ customInput.addEventListener('input', function () {
 		this.isValid = true;
 	}
 });
+
+// TODO Make custom between 0 and 100
+// TODO Make it responsive
+// TODO Make reset button validation
+// TODO calculate function
+
+document.addEventListener('click', docUpdate);
+document.addEventListener('input', docUpdate);
