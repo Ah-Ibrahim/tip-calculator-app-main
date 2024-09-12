@@ -27,6 +27,7 @@
 main {
     background-color: var(--light-grayish-cyan);
     padding: 10rem 0;
+    position: relative;
 }
 
 figure {
@@ -226,11 +227,19 @@ form .btn--active {
 /* TODO position attr */
 
 .attribution {
-    display: none;
+    /* display: none; */
+    position: absolute;
     font-size: 11px;
+    bottom: 2rem;
+    left: 50%;
+    transform: translate(-50%);
     text-align: center;
 }
 
 .attribution a {
-    color: hsl(228, 45%, 44%);
+    color: var(--very-dark-cyan);
+}
+
+.attribution a:hover {
+    color: var(--strong-cyan);
 }

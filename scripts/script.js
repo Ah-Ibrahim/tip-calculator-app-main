@@ -26,6 +26,10 @@ const isInputNotValidNumber = function (input) {
 	return isNaN(Number(input.value));
 };
 
+const isInputNotInRange = function (input, min, max) {
+	return !(+input.value >= min && +input.value <= max);
+};
+
 const makeInputNumOnly = function () {
 	this.value = this.value.replace(/[^0-9.]/g, '');
 };
@@ -77,7 +81,11 @@ const resetAll = function () {
 	billInput.value = '';
 	billInput.isValid = false;
 
-	activeBtn = null;
+	for (let btn of tipBtns) {
+		if (btn.isActive) {
+			makeBtnInactive(btn);
+		}
+	}
 
 	customInput.value = '';
 	customInput.isValid = false;
@@ -157,6 +165,7 @@ for (let btn of tipBtns) {
 			}
 
 			customInput.value = '';
+			customInput.classList.remove('input--error');
 			customInput.isValid = false;
 		}
 	});
@@ -165,6 +174,7 @@ for (let btn of tipBtns) {
 billInput.addEventListener('input', function () {
 	validateInput(this, billErrorText);
 });
+
 peopleInput.addEventListener('input', function () {
 	validateInput(this, peopleErrorText);
 
@@ -182,6 +192,7 @@ customInput.addEventListener('click', function () {
 		makeBtnInactive(btn);
 	}
 });
+
 customInput.addEventListener('input', function () {
 	if (this.value === '') {
 		this.classList.remove('input--error');
@@ -192,17 +203,17 @@ customInput.addEventListener('input', function () {
 		alert('enter a valid number');
 
 		this.isValid = false;
+	} else if (isInputNotInRange(this, 0, 100)) {
+		this.classList.add('input--error');
+		alert('enter a number between 0 and 100');
+
+		this.isValid = false;
 	} else {
 		this.classList.remove('input--error');
 
 		this.isValid = true;
 	}
 });
-
-// TODO Make custom between 0 and 100
-// TODO Make it responsive
-// TODO Make reset button validation
-// TODO calculate function
 
 document.addEventListener('click', docUpdate);
 document.addEventListener('input', docUpdate);
