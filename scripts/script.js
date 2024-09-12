@@ -7,8 +7,7 @@ const customInput = document.querySelector('.input--custom');
 const billErrorText = document.querySelector('#input-bill+.error-text');
 const peopleErrorText = document.querySelector('#input-people+.error-text');
 
-let billInputIsValid = false;
-let peopleInputIsValid = false;
+const tipBtns = document.querySelectorAll('.btn--tip');
 
 const isInputZero = function (input) {
 	return Number(input.value) === 0;
@@ -52,8 +51,37 @@ function validateInput(input, errorText) {
 	}
 }
 
+const makeBtnActive = function (btn) {
+	for (let tipBtn of tipBtns) {
+		if (btn === tipBtn) {
+			tipBtn.classList.add('btn--active');
+			tipBtn.isActive = true;
+			continue;
+		}
+
+		tipBtn.classList.remove('btn--active');
+		tipBtn.isActive = false;
+	}
+
+	customInput.value = '';
+	customInput.isValid = false;
+};
+
+const makeBtnInactive = function (btn) {
+	btn.classList.remove('btn--active');
+	btn.isActive = false;
+};
+
 for (let input of inputs) {
 	input.addEventListener('input', makeInputNumOnly);
+}
+
+for (let btn of tipBtns) {
+	btn.isActive = false;
+
+	btn.addEventListener('click', function () {
+		btn.isActive ? makeBtnInactive(btn) : makeBtnActive(btn);
+	});
 }
 
 billInput.addEventListener('input', function () {
@@ -71,14 +99,14 @@ peopleInput.addEventListener('input', function () {
 	}
 });
 
+customInput.addEventListener('click', function () {
+	for (let btn of tipBtns) {
+		makeBtnInactive(btn);
+	}
+});
 customInput.addEventListener('input', function () {
 	if (this.value === '') {
 		this.classList.remove('input--error');
-
-		this.isValid = false;
-	} else if (isInputZero(this)) {
-		this.classList.add('input--error');
-		alert("can't be zero");
 
 		this.isValid = false;
 	} else if (isInputNotValidNumber(this)) {
