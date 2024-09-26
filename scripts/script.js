@@ -193,7 +193,7 @@ customInput.addEventListener('click', function () {
 	}
 });
 
-customInput.addEventListener('input', function () {
+customInput.addEventListener('input', function (event) {
 	if (this.value === '') {
 		this.classList.remove('input--error');
 
@@ -203,7 +203,7 @@ customInput.addEventListener('input', function () {
 		alert('enter a valid number');
 
 		this.isValid = false;
-	} else if (isInputNotInRange(this, 0, 100)) {
+	} else if (isInputNotInRange(this, 0, 100) && event.inputType !== 'deleteContentBackward') {
 		this.classList.add('input--error');
 		alert('enter a number between 0 and 100');
 
